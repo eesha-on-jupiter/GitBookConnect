@@ -1,0 +1,6 @@
+{
+  "plugin_name": "GitBookConnect",
+  "docs_url": "https://gitbook.com/docs/developers/gitbook-api",
+  "openapi_url": "https://api.gitbook.com/openapi.json",
+  "token_ready": false
+}

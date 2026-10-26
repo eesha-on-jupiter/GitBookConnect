@@ -1,0 +1,1131 @@
+[
+  {
+    "endpoint_id": "get_current_user",
+    "component": "GitBookAuthComponent",
+    "method": "GET",
+    "url_template": "/user",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "displayName": "string",
+      "email": "string",
+      "photoURL": "string",
+      "urls": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "VALIDATED",
+    "test_result": {
+      "tag": "VALIDATED",
+      "status_code": 200,
+      "latency_ms": 1097,
+      "error": ""
+    }
+  },
+  {
+    "endpoint_id": "list_organizations",
+    "component": "GetAllOrganizationsComponent",
+    "method": "GET",
+    "url_template": "/orgs",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [],
+    "query_params": [
+      {
+        "name": "page",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "type": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Paginated \u2014 pagination key: page",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1153,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_organization",
+    "component": "GetOrganizationComponent",
+    "method": "GET",
+    "url_template": "/orgs/{organizationId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "organizationId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "title": "string",
+      "createdAt": "string",
+      "emailDomains": "array",
+      "hostname": "string",
+      "type": "string",
+      "useCase": "string",
+      "communityType": "string",
+      "defaultRole": "object",
+      "defaultContent": "object",
+      "sso": "boolean",
+      "ai": "boolean",
+      "inviteLinks": "boolean",
+      "auditLogs": "boolean",
+      "plan": "string",
+      "billing": "object",
+      "mergeRules": "object",
+      "urls": "object",
+      "trial": "object",
+      "customHostname": "string",
+      "blocked": "object",
+      "internal_billingMigration": "object",
+      "permissions": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1098,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "list_spaces",
+    "component": "GetAllSpacesComponent",
+    "method": "GET",
+    "url_template": "/orgs/{organizationId}/spaces",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "organizationId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "page",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "type": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Paginated \u2014 pagination key: page",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1173,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_space",
+    "component": "GetSpaceComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "shareKey",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "title": "string",
+      "emoji": "string",
+      "visibility": "string",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "deletedAt": "string",
+      "editMode": "string",
+      "type": "string",
+      "mergeRules": "object",
+      "urls": "object",
+      "organization": "string",
+      "parent": "string",
+      "language": "string",
+      "gitSync": "object",
+      "imports": "array",
+      "visitorAuth": "object",
+      "revision": "string",
+      "defaultLevel": "object",
+      "comments": "number",
+      "changeRequests": "number",
+      "changeRequestsOpen": "number",
+      "changeRequestsDraft": "number",
+      "internal_poweredByV2": "boolean",
+      "internal_singleWebsocket": "boolean",
+      "permissions": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1208,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "list_collections",
+    "component": "GetAllCollectionsComponent",
+    "method": "GET",
+    "url_template": "/orgs/{organizationId}/collections",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "organizationId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "page",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "nested",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "type": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Paginated \u2014 pagination key: page",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1155,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_collection",
+    "component": "GetCollectionComponent",
+    "method": "GET",
+    "url_template": "/collections/{collectionId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "collectionId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "organization": "string",
+      "parent": "string",
+      "defaultLevel": "object",
+      "urls": "object",
+      "permissions": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1151,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_published_content",
+    "component": "GetPublishedContentComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/content",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "metadata",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "computed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "__ambiguous__": "oneOf",
+      "variants": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1397,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "list_pages",
+    "component": "GetAllPagesComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/content/pages",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "metadata",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "computed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "pages": "array"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "VALIDATED",
+    "test_result": {
+      "tag": "VALIDATED",
+      "status_code": 200,
+      "latency_ms": 1451,
+      "error": ""
+    }
+  },
+  {
+    "endpoint_id": "get_page",
+    "component": "GetPageComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/content/page/{pageId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "pageId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "format",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "format.markdown.refs",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "evaluated",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "dereferenced",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "metadata",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "computed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "__ambiguous__": "oneOf",
+      "variants": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1361,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_page_by_path",
+    "component": "GetPageByPathComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/content/path/{pagePath}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "pagePath",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "format",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "format.markdown.refs",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "evaluated",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "dereferenced",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "metadata",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "computed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "__ambiguous__": "oneOf",
+      "variants": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Manually validated Gate 4 (2026-08-27): pagePath is not auto-harvestable by the generic id-based seeder; confirmed working live with real seed_ids (spaceId=MQFO9pPgK1k2FTbnuWsL, pagePath=\"api-test-page\") -> HTTP 200. pr-api-tester server.py patched to harvest sibling \"path\" fields going forward (needs MCP server restart to take effect automatically).",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 816,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "create_change_request",
+    "component": "CreateChangeRequestComponent",
+    "method": "POST",
+    "url_template": "/spaces/{spaceId}/change-requests",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": {
+      "subject": "string",
+      "template": "object"
+    },
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "number": "number",
+      "status": "string",
+      "subject": "string",
+      "description": "object",
+      "createdBy": "object",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "mergedBy": "object",
+      "mergedAt": "string",
+      "space": "string",
+      "revision": "string",
+      "revisionInitial": "string",
+      "revisionMergedAncestor": "string",
+      "revisionMerged": "string",
+      "comments": "number",
+      "siteTopic": "object",
+      "outdated": "boolean",
+      "imports": "array",
+      "links": "array",
+      "urls": "object"
+    },
+    "example_request": {
+      "subject": "API test change request"
+    },
+    "example_response": {},
+    "notes": "Fixed by pr-api-scout: OpenAPI spec confirms only 'subject' is required (string, 0-100 chars); 'template' (ApplySpaceTemplate: {id, params}) is optional and omitted here.",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 201,
+      "latency_ms": 956,
+      "error": "HTTP 201"
+    }
+  },
+  {
+    "endpoint_id": "list_change_requests",
+    "component": "GetAllChangeRequestsComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/change-requests",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "page",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "limit",
+        "type": "number",
+        "required": false
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "creator",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "contributor",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "requestedReviewer",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "topic",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "orderBy",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "type": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Paginated \u2014 pagination key: page",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 951,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_change_request",
+    "component": "GetChangeRequestComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "number": "number",
+      "status": "string",
+      "subject": "string",
+      "description": "object",
+      "createdBy": "object",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "mergedBy": "object",
+      "mergedAt": "string",
+      "space": "string",
+      "revision": "string",
+      "revisionInitial": "string",
+      "revisionMergedAncestor": "string",
+      "revisionMerged": "string",
+      "comments": "number",
+      "siteTopic": "object",
+      "outdated": "boolean",
+      "imports": "array",
+      "links": "array",
+      "urls": "object"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 616,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "update_change_request",
+    "component": "UpdateChangeRequestComponent",
+    "method": "PATCH",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": {
+      "subject": "string",
+      "description": "object",
+      "links": "array",
+      "status": "string"
+    },
+    "response_schema": {
+      "object": "string",
+      "id": "string",
+      "number": "number",
+      "status": "string",
+      "subject": "string",
+      "description": "object",
+      "createdBy": "object",
+      "createdAt": "string",
+      "updatedAt": "string",
+      "mergedBy": "object",
+      "mergedAt": "string",
+      "space": "string",
+      "revision": "string",
+      "revisionInitial": "string",
+      "revisionMergedAncestor": "string",
+      "revisionMerged": "string",
+      "comments": "number",
+      "siteTopic": "object",
+      "outdated": "boolean",
+      "imports": "array",
+      "links": "array",
+      "urls": "object"
+    },
+    "example_request": {
+      "subject": "Updated via API test"
+    },
+    "example_response": {},
+    "notes": "Fixed by pr-api-scout: OpenAPI spec shows all PATCH fields optional (no 'required' array); 'subject' is a plain string (ChangeRequestSubject, 0-100 chars), not an object.",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 653,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "get_change_request_content",
+    "component": "GetChangeRequestContentComponent",
+    "method": "GET",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}/content",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "metadata",
+        "type": "boolean",
+        "required": false
+      },
+      {
+        "name": "computed",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "__ambiguous__": "oneOf",
+      "variants": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "object"
+        }
+      ]
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 905,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "apply_change_request_content",
+    "component": "ApplyContentChangesComponent",
+    "method": "POST",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}/content",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [
+      {
+        "name": "compat",
+        "type": "boolean",
+        "required": false
+      }
+    ],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": {
+      "changes": "array"
+    },
+    "response_schema": {
+      "__ambiguous__": "oneOf",
+      "variants": [
+        {
+          "object": "string",
+          "id": "string",
+          "number": "number",
+          "status": "string",
+          "subject": "string",
+          "description": "object",
+          "createdBy": "object",
+          "createdAt": "string",
+          "updatedAt": "string",
+          "mergedBy": "object",
+          "mergedAt": "string",
+          "space": "string",
+          "revision": "string",
+          "revisionInitial": "string",
+          "revisionMergedAncestor": "string",
+          "revisionMerged": "string",
+          "comments": "number",
+          "siteTopic": "object",
+          "outdated": "boolean",
+          "imports": "array",
+          "links": "array",
+          "urls": "object"
+        },
+        {
+          "changeRequest": "object",
+          "changes": "array",
+          "insertedFiles": "array"
+        }
+      ]
+    },
+    "example_request": {
+      "changes": [
+        {
+          "operation": "insert_page",
+          "title": "API Test Page",
+          "document": {
+            "markdown": "# API Test Page\n\nCreated by automated API test.\n"
+          }
+        }
+      ]
+    },
+    "example_response": {},
+    "notes": "Fixed by pr-api-scout: 'changes' is a required, non-empty array (1-50 items) of ChangeRequestContentChange (oneOf, discriminated by 'operation'). Used the 'insert_page' variant (operation, title, document) taken directly from the OpenAPI spec's own example.",
+    "status": "PARTIAL",
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 200,
+      "latency_ms": 1552,
+      "error": "HTTP 200"
+    }
+  },
+  {
+    "endpoint_id": "sync_change_request",
+    "component": "SyncChangeRequestComponent",
+    "method": "POST",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}/update",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "revision": "string",
+      "result": "string"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Confirmed via GitBook OpenAPI spec: this operation genuinely takes no request body (rebases the change request onto the latest primary revision using only path params). Confirmed via direct live call: HTTP 409 {\"error\":{\"code\":409,\"message\":\"Branch is already up-to-date\"}} is the correct, documented response when the change request has no upstream changes to rebase onto -- not a call defect. Added expected_status_codes so the tester treats 200/409 as valid outcomes. Manually validated Gate 4 (2026-08-27): confirmed live that HTTP 409 {\"error\":{\"code\":409,\"message\":\"Branch is already up-to-date\"}} is the correct, documented response for a change request with nothing to rebase -- not a defect. call-library.json now declares expected_status_codes:[200,409] and server.py tag_result() honors it going forward (needs MCP server restart to take effect automatically).",
+    "status": "PARTIAL",
+    "expected_status_codes": [
+      200,
+      409
+    ],
+    "test_result": {
+      "tag": "PARTIAL",
+      "status_code": 409,
+      "latency_ms": 480,
+      "error": "HTTP 409 (expected -- see notes)"
+    }
+  },
+  {
+    "endpoint_id": "request_reviewers",
+    "component": "RequestReviewersComponent",
+    "method": "POST",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}/requested-reviewers",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": {
+      "users": "array",
+      "subject": "string",
+      "description": "object"
+    },
+    "response_schema": {
+      "users": "array"
+    },
+    "example_request": {
+      "users": [
+        "a0SDoiexF0ZSffo8DWfflK6eB433"
+      ]
+    },
+    "example_response": {},
+    "notes": "Fixed by pr-api-scout: 'users' (array of user IDs) is required per OpenAPI spec. Seeded with the test account's own user ID (from GET /user) since no other org member ID is available; GitBook may reject self-review \u2014 see manual_fixes / escalation notes if so.",
+    "status": "VALIDATED",
+    "test_result": {
+      "tag": "VALIDATED",
+      "status_code": 200,
+      "latency_ms": 1387,
+      "error": ""
+    }
+  },
+  {
+    "endpoint_id": "merge_change_request",
+    "component": "MergeChangeRequestComponent",
+    "method": "POST",
+    "url_template": "/spaces/{spaceId}/change-requests/{changeRequestId}/merge",
+    "base_url": "https://api.gitbook.com/v1",
+    "auth_in": "header",
+    "path_params": [
+      {
+        "name": "spaceId",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "changeRequestId",
+        "type": "string",
+        "required": true
+      }
+    ],
+    "query_params": [],
+    "headers": {
+      "Authorization": "Bearer {token}"
+    },
+    "body_schema": null,
+    "response_schema": {
+      "revision": "string",
+      "result": "string"
+    },
+    "example_request": {},
+    "example_response": {},
+    "notes": "Confirmed via GitBook OpenAPI spec: this operation genuinely takes no request body (merges the change request's draft content into the space's primary content using only path params).",
+    "status": "VALIDATED",
+    "test_result": {
+      "tag": "VALIDATED",
+      "status_code": 200,
+      "latency_ms": 738,
+      "error": ""
+    }
+  }
+]

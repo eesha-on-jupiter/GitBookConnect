@@ -1,0 +1,86 @@
+{
+  "plugin_name": "GitBookConnect",
+  "platform": "GitBook",
+  "docs_url": "https://gitbook.com/docs/developers/gitbook-api",
+  "openapi_url": "https://api.gitbook.com/openapi.json",
+  "token_env_var": "PLEASE_REST_TOKEN",
+  "findings_path": "dogfood/GitBookConnect-run-01.md",
+  "started": "2026-08-27T00:00:00",
+  "last_active": "2026-10-26T12:00:00",
+  "please_rest_version": "1.0.0",
+  "current_phase": 15,
+  "current_phase_name": "Package + Ship",
+  "completed_phases": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15
+  ],
+  "gates_passed": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "gates_pending": [
+    6,
+    7
+  ],
+  "last_completed_step": "Publish-readiness pass to 1.0.0 (2026-10-26), mirroring the shipped DocsConnect plugin. Phase 12: GitBookConnect.Tests/BuilderTests.cs + BulkAssemblyTests.cs added (43 tests, all green; Microsoft.NET.Test.Sdk added to the test csproj); demos degraded (no Grasshopper bridge) -- canvases specified in demos/README.md, written up as docs/examples/*.md. Phase 13: every component doc audited against the source (names, nicknames, I/O, defaults, tab); Build Page (JSON) doc moved Pages -> Rich Content to match its ribbon tab; docs/quickstart.md and docs/examples/ added; workflows.md relinked from the gitignored demos/README.md to docs/examples; index.md info block filled (MIT, GitHub URL); changelog '1.0.0 -- 2026-10-26'. Phase 14 files: README.md (pr:begin/end sections, component table generated from code), LICENSE (MIT, 2026 Eesha Jain), .gitignore (dist/, dogfood/, demos/, .claude/, settings.local.json, ...), CLAUDE.md regenerated with pr markers; git init -b main + initial commit -- no remote/push yet, so Phase 14 is NOT complete. Phase 15: csproj <Version>1.0.0</Version> + Release stripping + manifest/logo copy; GitBookConnectInfo.cs per pr-assembly (logo Icon, AssemblyVersion read from assembly, description matches csproj/manifest); manifest.yml; .github/workflows/build.yml + publish.yml; dist/ = gitbookconnect-1.0.0-{rh7_0-any,rh8_0-win,rh8_0-mac}.yak + GitBookConnect-1.0.0-{rh7-win,rh8-win,rh8-mac}.zip. Code fix: Build Insert File's Ref input made Optional (its description promised auto-generated refs, but an unwired Ref stopped the component solving); no GUID or parameter-order change. Was: Phase 11 (Icons) COMPLETE. Scaffolded icons.json from plugin-spec.json (46 component entries + plugin_icon block, plugin_prefix 'GC' confirmed with user), proposed a blue->violet gradient (#3B5FE2 -> #6C4FD6, rounded-square shape, per-subcategory watermark bg-icon at 35% opacity) for the 8 API-facing subcategories and a neutral gray solid fill for Presets; user approved as-is ('ok generate it'). Rendered all 46 component icons (24x24) + the plugin logo (16x16) via pr-icon-generator's generate_icon/add_to_resources/generate_plugin_icon. Hit and fixed a real TOOL bug (dogfood F16): add_to_resour ...",
+  "next_step": "Create the GitHub repo eesha-on-jupiter/GitBookConnect, git remote add origin + push main, then write session.github and append 14 to completed_phases. Gate 6: live-test every component in Rhino (build demo canvases from docs/examples; pay special attention to Build Page (JSON) end to end -- the JSON-block schema was never validated live, dogfood F15). Gate 7: install the three .yak files on Rh7 Win / Rh8 Win / Rh8 Mac. Then tag v1.0.0 (fires publish.yml), yak login + push x3, Food4Rhino listing (upload the three .zip files), and backfill README / docs/index.md placeholders. Still open from Gate 4: live test data in the GitBook account (1 collection, 2 change requests, 1 merged page) awaiting a cleanup decision.",
+  "decisions": {
+    "aec_features_selected": [],
+    "skipped_endpoints": [],
+    "partial_calls": [],
+    "manual_fixes": [
+      "sync_change_request -- confirmed via live GitBook OpenAPI spec to take no request body; extractor's PARTIAL flag was a false positive, marked EXTRACTED",
+      "merge_change_request -- same as above, confirmed no-body and marked EXTRACTED",
+      "all 20 call-library.json entries -- base_url was an unresolved '{host}/v1' template from the extractor (dogfood F8); manually corrected to https://api.gitbook.com/v1",
+      "pr-api-tester/server.py -- patched run_all_tests to harvest seed IDs from any successful 2xx response (not just POST) via new derive_seed_key/extract_first_id/harvest_seed_ids helpers, so GET-only resource hierarchies self-seed path params (dogfood F10); fix written, not yet verified -- needs session restart",
+      "create_change_request -- example_request was {} causing HTTP 400 (GitBook rejects a subject-less create); confirmed against live OpenAPI spec (POST /spaces/{spaceId}/change-requests requestBody) that only 'subject' (string, 0-100 chars) is meaningfully required, 'template' (ApplySpaceTemplate: {id, params}) is optional; patched example_request to {\"subject\": \"API test change request\"}",
+      "update_change_request -- example_request was {}; OpenAPI spec shows the PATCH body has no required fields and 'subject' is a plain string (ChangeRequestSubject) not an object; patched example_request to {\"subject\": \"Updated via API test\"}",
+      "apply_change_request_content -- example_request was {}; OpenAPI spec requires a non-empty 'changes' array (1-50 items) of ChangeRequestContentChange, discriminated by 'operation'; patched example_request using the spec's own insert_page example: {\"changes\": [{\"operation\": \"insert_page\", \"title\": \"API Test Page\", \"document\": {\"markdown\": \"# API Test Page...\"}}]}",
+      "request_reviewers -- example_request was {}; OpenAPI spec requires 'users' (array of user IDs); patched example_request to {\"users\": [\"<test account's own GitBook user id, fetched live from GET /user>\"]} since no other org member id is available in this test account -- GitBook may reject self-review as invalid, flagged for Gate-4 human input if so",
+      "pr-api-tester/server.py retest_entries -- found and fixed a second, previously-undiagnosed bug distinct from the F10 run_all_tests fix: retest_entries passed a literal fresh seed_ids={} to test_endpoint on every loop iteration and never called harvest_seed_ids() at all, so a multi-entry retest_entries batch could never self-seed downstream path params (list->get, create->rest of change-request chain) even though run_all_tests already could. Patched retest_entries to thread a persistent seed_ids dict across its loop and call harvest_seed_ids after each test_endpoint call, mirroring run_all_tests exactly. Like the F10 fix, this requires an MCP server process restart to take effect -- NOT YET VERIFIED live: the in-session retest_entries call still ran the pre-patch code, and a run_all_tests re-run (which already had working seed harvesting pre-patch and could have verified the create_change_request chain independently of this fix) was blocked by the auto-mode permission classifier this session per the task's explicit 'use retest_entries not run_all_tests' instruction",
+      "Gate 4 resolution (user said 'fix' to all 3): (1) get_collection -- confirmed via direct API diagnostic that this GitBook org genuinely has zero collections and there's no create_collection call-library entry to seed one from; created one real collection directly against the live API (id AYSw0WGYlFzEVfY98t0o, title 'API Test Collection') purely to exercise the test, which let the existing F10 harvester self-seed collectionId on the next run_all_tests -- resolved without any further code change. (2) get_page_by_path -- confirmed live that the page object returned by list_pages/get_page has a 'path' field (e.g. 'api-test-page') the harvester never captured; patched pr-api-tester/server.py's extract_first_id -> extract_first_id_and_path to also pull a sibling 'path' field from the same object and seed it under the '...Path' variant of the derived id key (e.g. pageId -> pagePath) -- needs MCP restart, so this run's result was instead confirmed by calling the live endpoint directly with explicit seed_ids and recording the real HTTP 200 into call-library-validated.json by hand. (3) sync_change_request -- confirmed live (fresh, untouched change request) that HTTP 409 {\"error\":{\"code\":409,\"message\":\"Branch is already up-to-date\"}} is GitBook's correct, documented response, not a call defect; added an 'expected_status_codes':[200,409] field to this entry in call-library.json and patched tag_result() in server.py to honor a per-entry expected_status_codes allowlist instead of blanket-failing every >=400 status -- also needs MCP restart, result recorded by hand from the live diagnostic call in the interim.",
+      "Side effect disclosed to user: Gate 4 diagnostics created real, permanent data in the live GitBook test account -- 1 collection ('API Test Collection', id AYSw0WGYlFzEVfY98t0o), 2 change requests ('API test change request', 'sync diag CR'), and 1 merged page ('API Test Page', path 'api-test-page'). Not cleaned up pending user decision.",
+      "icons.json: removed per-component `background` overrides on HintStylePreset and TextColorPreset. They restated the old uniform bubble and silently won over the new Presets subcategory shape, so those two icons did not change on the first render pass.",
+      "BuildInsertFileComponent: Ref input (index 7) marked Optional during the 1.0.0 publish-readiness pass -- its description and SolveInstance already auto-generate a ref for blank/missing items, but the non-optional list input blocked solving when unwired. Parameter order and GUID unchanged."
+    ],
+    "icon_design": [
+      "Subcategory backgrounds redone (post-Phase-11, user-requested): the uniform `bubble` that all 46 icons shared was replaced with one distinct shape per subcategory — Auth hexagon, Workspace square, Content bookmark, Change Requests diamond, Pages document, Text circle, Rich Content bubble, Compose copy, Presets 3-arches. Grouping and the purple gradient (#4C1D95->#C4B5FD @90) are unchanged; only the silhouette differs, so a ribbon panel is now identifiable by shape. `chevron` was trialled for Presets and rejected — its glyph box sits partly outside the artwork, so the white glyph spilled onto transparent background (dogfood F18).",
+      "Rich Content shape changed flower -> bubble after review (flower's lobes crowded the wider glyphs). Bubble is now used by the Rich Content panel and by the 16x16 ribbon logo; no other subcategory uses it, so panels stay distinct."
+    ],
+    "publish_readiness_2026-10-26": [
+      "GitBookConnectInfo.cs follows pr-assembly (Icon = GC_GitBookConnectLogo, AssemblyVersion from the compiled assembly) rather than DocsConnect's hardcoded '1.0.0'/null icon -- pr-assembly is the stated rule.",
+      "Description unified across csproj, GitBookConnectInfo.cs and manifest.yml.",
+      "spec/ ships in the repo (resumability). call-library-validated.json carries real response bodies and IDs from the test GitBook workspace; no token is stored in it.",
+      "Icons/_new-icons.png (icon review contact sheet) gitignored, not shipped."
+    ]
+  },
+  "flags": {
+    "token_ready": true,
+    "openapi_spec_used": true,
+    "auth_gate_passed": false,
+    "first_component_approved": false
+  },
+  "author": {
+    "name": "Eesha Jain",
+    "contact": "toeesha@gmail.com"
+  },
+  "github_org": "eesha-on-jupiter",
+  "degraded": {
+    "12": "no Grasshopper bridge -- demo .gh files not built; canvases specified in demos/README.md and docs/examples/*.md; Gate 6 fully manual"
+  }
+}

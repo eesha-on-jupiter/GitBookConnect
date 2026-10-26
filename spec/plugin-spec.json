@@ -1,0 +1,914 @@
+{
+  "plugin_name": "GitBookConnect",
+  "platform": "GitBook",
+  "base_url": "https://api.gitbook.com/v1",
+  "auth_method": "Bearer token",
+  "api_version": "v1 (OpenAPI 0.0.1-beta)",
+  "tab_name": "GitBookConnect",
+  "aec_features": {
+    "selected": [],
+    "already_delivered_by_spec": ["In-GH Documentation Writer (Text + Rich Content tabs)", "Auth Manager (Connect to GitBook)", "Error Reporter (Status/Response on every HTTP component)", "Batch Processor (Content Changes Aggregator)"],
+    "not_a_fit": ["BIM Data Bridge (no metadata-dictionary field in the API)", "Geometry Serializer (no coordinate/geometry field in the API)"],
+    "declined": [{ "feature": "Version Watcher (Get Revision / Get Revision Changes)", "reason": "No workflow currently calls for a pre-sync conflict check; user declined at Gate 3. Add via rest-add-feature if a real overwrite conflict comes up." }]
+  },
+  "subcategories": [
+    {
+      "name": "Auth",
+      "type": "http",
+      "components": [
+        {
+          "class_name": "GitBookAuthComponent",
+          "file_name": "GitBookAuth.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_current_user",
+          "name": "Connect to GitBook",
+          "nickname": "Connect",
+          "description": "Use a GitBook Personal Access Token (Settings -> Developer -> Personal Access Tokens), not an integration token -- Change Request writes (Change Requests tab) explicitly reject integration tokens per the API's per-endpoint security requirements. A personal token also inherits the user's actual space role (Admin/Editor/Reviewer/Viewer); Reviewer/Viewer roles will still be blocked from creating Change Requests.",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item", "default": "" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Workspace",
+      "type": "http",
+      "description": "Organization, Space, and Collection browsing/navigation, merged into one tab -- all three are read-only lookups used to get to a target Space ID (per pr-spec-critic review), not distinct write workflows.",
+      "components": [
+        {
+          "class_name": "GetAllOrganizationsComponent",
+          "file_name": "GetAllOrganizations.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "list_organizations",
+          "name": "List Organizations",
+          "nickname": "AllOrgs",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetOrganizationComponent",
+          "file_name": "GetOrganization.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_organization",
+          "name": "Get Organization",
+          "nickname": "Org",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Organization ID", "nickname": "OID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetAllSpacesComponent",
+          "file_name": "GetAllSpaces.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "list_spaces",
+          "name": "List Spaces",
+          "nickname": "AllSpaces",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Organization ID", "nickname": "OID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetSpaceComponent",
+          "file_name": "GetSpace.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_space",
+          "name": "Get Space",
+          "nickname": "Space",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetAllCollectionsComponent",
+          "file_name": "GetAllCollections.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "list_collections",
+          "name": "List Collections",
+          "nickname": "AllColls",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Organization ID", "nickname": "OID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetCollectionComponent",
+          "file_name": "GetCollection.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_collection",
+          "name": "Get Collection",
+          "nickname": "Coll",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Collection ID", "nickname": "CID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Content",
+      "type": "http",
+      "description": "Read-only access to a space's currently published (merged) content. Never the write path -- see Change Requests.",
+      "components": [
+        {
+          "class_name": "GetPublishedContentComponent",
+          "file_name": "GetPublishedContent.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_published_content",
+          "name": "Get Published Content",
+          "nickname": "Content",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetAllPagesComponent",
+          "file_name": "GetAllPages.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "list_pages",
+          "name": "List Pages",
+          "nickname": "AllPages",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetPageComponent",
+          "file_name": "GetPage.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_page",
+          "name": "Get Page",
+          "nickname": "Page",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Page ID", "nickname": "PID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetPageByPathComponent",
+          "file_name": "GetPageByPath.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_page_by_path",
+          "name": "Find Page By Path",
+          "nickname": "FindPage",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Page Path", "nickname": "PP", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Change Requests",
+      "type": "http",
+      "description": "The mandatory write path (workflow 4). apply_change_request_content is the single batch write endpoint that every Pages/Rich Content/Compose builder ultimately feeds. Requires a Personal Access Token -- see Connect to GitBook. Merge Change Request additionally requires the token's user to hold change-request:merge permission on the space; kept in the spec even though not currently needed.",
+      "components": [
+        {
+          "class_name": "CreateChangeRequestComponent",
+          "file_name": "CreateChangeRequest.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "create_change_request",
+          "name": "Create Change Request",
+          "nickname": "NewCR",
+          "description": "Response includes a urls.app field -- a direct link to view/edit the Change Request in the GitBook web app. Confirmed via a live API test.",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Subject", "nickname": "Su", "type": "string", "access": "item", "default": "", "optional": true },
+            { "name": "Description", "nickname": "D", "type": "string", "access": "item", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" },
+            { "name": "URL", "nickname": "URL", "type": "string", "access": "item" },
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetAllChangeRequestsComponent",
+          "file_name": "GetAllChangeRequests.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "list_change_requests",
+          "name": "List Change Requests",
+          "nickname": "AllCRs",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetChangeRequestComponent",
+          "file_name": "GetChangeRequest.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_change_request",
+          "name": "Get Change Request",
+          "nickname": "CR",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "URL", "nickname": "URL", "type": "string", "access": "item" },
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "UpdateChangeRequestComponent",
+          "file_name": "UpdateChangeRequest.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "update_change_request",
+          "name": "Update Change Request",
+          "nickname": "UpdCR",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" },
+            { "name": "Subject", "nickname": "Su", "type": "string", "access": "item", "default": "", "optional": true },
+            { "name": "Description", "nickname": "D", "type": "string", "access": "item", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "GetChangeRequestContentComponent",
+          "file_name": "GetChangeRequestContent.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "get_change_request_content",
+          "name": "Get Change Request Content",
+          "nickname": "CRContent",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "ApplyContentChangesComponent",
+          "file_name": "ApplyContentChanges.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "apply_change_request_content",
+          "name": "Apply Content Changes",
+          "nickname": "Apply",
+          "description": "The single batch write call. Sends up to 50 Change JSON operations at once (API limit) -- wire the Compose tab's Content Changes Aggregator output here.",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" },
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "SyncChangeRequestComponent",
+          "file_name": "SyncChangeRequest.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "sync_change_request",
+          "name": "Sync Change Request",
+          "nickname": "SyncCR",
+          "description": "Rebase the Change Request on the space's latest live content before merging.",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "RequestReviewersComponent",
+          "file_name": "RequestReviewers.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "request_reviewers",
+          "name": "Request Reviewers",
+          "nickname": "ReqReview",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" },
+            { "name": "Reviewer User ID", "nickname": "UID", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "MergeChangeRequestComponent",
+          "file_name": "MergeChangeRequest.cs",
+          "type": "component",
+          "role": "write",
+          "endpoint_id": "merge_change_request",
+          "name": "Merge Change Request",
+          "nickname": "Merge",
+          "description": "Publishes the Change Request into the space's live content. This is the only way content actually goes live -- irreversible via the API.",
+          "inputs": [
+            { "name": "Token", "nickname": "T", "type": "string", "access": "item" },
+            { "name": "Space ID", "nickname": "SID", "type": "string", "access": "item" },
+            { "name": "Change Request ID", "nickname": "CRID", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Status", "nickname": "S", "type": "string", "access": "item" },
+            { "name": "Response", "nickname": "R", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pages",
+      "type": "json",
+      "description": "Content-type division (batch-write API detected -- see pr-spec). Build Page (JSON) (Rich Content tab) is the primary authoring path; Build Page (Markdown) here is a lightweight secondary path for quick plain-text pages. Satisfies workflows 1, 2, 3, 5.",
+      "components": [
+        {
+          "class_name": "BuildPageMarkdownComponent",
+          "file_name": "BuildPageMarkdown.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Build Page (Markdown)",
+          "nickname": "MDPage",
+          "description": "Secondary/lightweight path -- prefer Build Page (JSON) in Rich Content for styled text, blocks, and tables.",
+          "inputs": [
+            { "name": "Title", "nickname": "Ti", "type": "string", "access": "item", "default": "", "optional": true },
+            { "name": "Markdown Body", "nickname": "MB", "type": "string", "access": "item" },
+            { "name": "Icon", "nickname": "I", "type": "string", "access": "item", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Document JSON", "nickname": "DJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "MarkdownTableFromGridComponent",
+          "file_name": "MarkdownTableFromGrid.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Markdown Table From Grid",
+          "nickname": "GridToMD",
+          "description": "Secondary path for the tabular benchmark (workflow 2) -- prefer Table Block (Rich Content) for JSON. Rows x columns tree -> a Markdown table string, for Build Page (Markdown)'s Markdown Body.",
+          "inputs": [
+            { "name": "Header Row", "nickname": "H", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Grid", "nickname": "G", "type": "string", "access": "tree" }
+          ],
+          "outputs": [
+            { "name": "Markdown Body", "nickname": "MB", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "InsertPageComponent",
+          "file_name": "InsertPage.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Insert Page",
+          "nickname": "InsPage",
+          "description": "Satisfies workflow 1 (one call, list-access -- batch-create many pages by wiring lists).",
+          "inputs": [
+            { "name": "Document JSON", "nickname": "DJ", "type": "string", "access": "list" },
+            { "name": "Into", "nickname": "Into", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "At", "nickname": "At", "type": "int", "access": "list", "default": "", "optional": true },
+            { "name": "Ref", "nickname": "Ref", "type": "string", "access": "list", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ]
+        },
+        {
+          "class_name": "UpdatePageComponent",
+          "file_name": "UpdatePage.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Update Page",
+          "nickname": "UpdPage",
+          "inputs": [
+            { "name": "Page ID", "nickname": "PID", "type": "string", "access": "list" },
+            { "name": "Document JSON", "nickname": "DJ", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Into", "nickname": "Into", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "At", "nickname": "At", "type": "int", "access": "list", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ]
+        },
+        {
+          "class_name": "BuildPagesFromTreeComponent",
+          "file_name": "BuildPagesFromTree.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Build Pages From Tree",
+          "nickname": "TreePages",
+          "description": "Dual Style Pattern parametric variant. Satisfies workflow 3 -- one shared parent target (item) plus every page property as an independent, optional tree-access input, joined positionally per branch. Emits insert_page when no Page ID is given for a branch, update_page when one is.",
+          "inputs": [
+            { "name": "Into", "nickname": "Into", "type": "string", "access": "item", "default": "", "optional": true },
+            { "name": "Page ID", "nickname": "PID", "type": "string", "access": "tree", "default": "", "optional": true },
+            { "name": "Title", "nickname": "Ti", "type": "string", "access": "tree", "default": "", "optional": true },
+            { "name": "Body Text", "nickname": "BT", "type": "string", "access": "tree", "default": "", "optional": true },
+            { "name": "Icon", "nickname": "I", "type": "string", "access": "tree", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Text",
+      "type": "json",
+      "description": "Inline text runs and marks (GitBook's DocumentTextMark union -- confirmed set: bold, italic, strikethrough, code, keyboard, superscript, subscript, color. No underline mark exists in the API.) Chainable recursive components -- wire a mark's Text JSON output into another mark's Text JSON input to combine styles on one run (e.g. Bold -> Italic -> Color).",
+      "components": [
+        {
+          "class_name": "PlainTextComponent",
+          "file_name": "PlainText.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Plain Text",
+          "nickname": "Text",
+          "description": "Starting point for a styled run -- wraps a raw string into a Text JSON leaf with no marks. Chain Mark components after it, or use it unstyled.",
+          "inputs": [
+            { "name": "Text", "nickname": "Tx", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "BoldMarkComponent",
+          "file_name": "BoldMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Bold Mark",
+          "nickname": "Bold",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "ItalicMarkComponent",
+          "file_name": "ItalicMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Italic Mark",
+          "nickname": "Italic",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "StrikethroughMarkComponent",
+          "file_name": "StrikethroughMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Strikethrough Mark",
+          "nickname": "Strike",
+          "description": "Closest available mark to 'underline' -- GitBook's schema has no underline mark.",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "CodeMarkComponent",
+          "file_name": "CodeMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Code Mark",
+          "nickname": "Code",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "KeyboardMarkComponent",
+          "file_name": "KeyboardMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Keyboard Mark",
+          "nickname": "Kbd",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "SuperscriptMarkComponent",
+          "file_name": "SuperscriptMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Superscript Mark",
+          "nickname": "Sup",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "SubscriptMarkComponent",
+          "file_name": "SubscriptMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Subscript Mark",
+          "nickname": "Sub",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "ColorMarkComponent",
+          "file_name": "ColorMark.cs",
+          "type": "component",
+          "role": "recursive",
+          "name": "Color Mark",
+          "nickname": "Color",
+          "description": "Text Color and Background Color both take a GitBook color token (see the Text Color preset) -- Background Color is GitBook's equivalent of a 'highlight'.",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" },
+            { "name": "Text Color", "nickname": "TC", "type": "string", "access": "item", "default": "default", "optional": true },
+            { "name": "Background Color", "nickname": "BC", "type": "string", "access": "item", "default": "default", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rich Content",
+      "type": "json",
+      "description": "JSON-document block builders -- the primary authoring path per the 'everything JSON' preference. Blocks take Text JSON runs (list) from the Text tab so styling flows all the way through. Aggregation happens in Compose.",
+      "components": [
+        {
+          "class_name": "ParagraphBlockComponent",
+          "file_name": "ParagraphBlock.cs",
+          "type": "component",
+          "role": "aggregator",
+          "name": "Paragraph Block",
+          "nickname": "Para",
+          "description": "Wraps one or more styled Text JSON runs (from the Text tab) into a paragraph block.",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "HeadingBlockComponent",
+          "file_name": "HeadingBlock.cs",
+          "type": "component",
+          "role": "aggregator",
+          "name": "Heading Block",
+          "nickname": "Head",
+          "inputs": [
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "list" },
+            { "name": "Level", "nickname": "Lv", "type": "int", "access": "item", "default": "2", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "BuildHintBlockComponent",
+          "file_name": "BuildHintBlock.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Hint Block",
+          "nickname": "Hint",
+          "inputs": [
+            { "name": "Style", "nickname": "St", "type": "string", "access": "item", "default": "info" },
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "BuildExpandableBlockComponent",
+          "file_name": "BuildExpandableBlock.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Expandable Block",
+          "nickname": "Expand",
+          "inputs": [
+            { "name": "Title", "nickname": "Ti", "type": "string", "access": "item" },
+            { "name": "Text JSON", "nickname": "TJ", "type": "string", "access": "list" },
+            { "name": "Default Expanded", "nickname": "DE", "type": "bool", "access": "item", "default": "false", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "BuildCardsBlockComponent",
+          "file_name": "BuildCardsBlock.cs",
+          "type": "component",
+          "role": "aggregator",
+          "name": "Cards Block",
+          "nickname": "Cards",
+          "description": "GitBook has no dedicated 'card' block -- its editor's Cards feature is a columns block whose column children each hold a heading/text/icon. Builds that structure from parallel lists, one item per card.",
+          "inputs": [
+            { "name": "Card Title", "nickname": "CTi", "type": "string", "access": "list" },
+            { "name": "Card Text", "nickname": "CTx", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Card Icon", "nickname": "CI", "type": "string", "access": "list", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "TableBlockComponent",
+          "file_name": "TableBlock.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Table Block",
+          "nickname": "Table",
+          "description": "Cross-platform tabular benchmark (workflow 2), JSON path. Rows x columns tree -> a GitBook grid-view table block with plain text cells. Simplified v1 scope -- does not cover typed columns or card-view tables.",
+          "inputs": [
+            { "name": "Header Row", "nickname": "H", "type": "string", "access": "list" },
+            { "name": "Grid", "nickname": "G", "type": "string", "access": "tree" }
+          ],
+          "outputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "item" }
+          ]
+        },
+        {
+          "class_name": "BuildRichPageComponent",
+          "file_name": "BuildRichPage.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Build Page (JSON)",
+          "nickname": "JSONPage",
+          "description": "Primary page-authoring path. Takes the assembled Blocks JSON from Compose's Blocks Aggregator. Same Document JSON contract as Build Page (Markdown), so both are interchangeable into Insert Page / Update Page.",
+          "inputs": [
+            { "name": "Title", "nickname": "Ti", "type": "string", "access": "item", "default": "", "optional": true },
+            { "name": "Blocks JSON", "nickname": "BLJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Document JSON", "nickname": "DJ", "type": "string", "access": "item" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Compose",
+      "type": "json",
+      "description": "Assembly point. Build Insert File and both aggregators live here -- everything that gathers/bundles pieces from other tabs into what Change Requests and Rich Content actually consume.",
+      "components": [
+        {
+          "class_name": "BuildInsertFileComponent",
+          "file_name": "BuildInsertFile.cs",
+          "type": "component",
+          "role": "unit",
+          "name": "Build Insert File",
+          "nickname": "InsFile",
+          "description": "Satisfies workflow 6 -- builds an image/file from whichever source is provided per list item: File Path (reads local disk), Bitmap (a GH Bitmap object, PNG-encoded), Source URL (GitBook fetches it), Base64 (inline, capped at 1MB by the API), or Capture Rhino Viewport (captures the active Rhino 3D view when true, via RhinoDoc.ActiveDoc.Views -- View Name selects a named view, empty = active view). Exactly one source should be set per item; Capture Rhino Viewport takes priority when true. Bundles all items into one insert_files Change JSON and emits one Image Block per item.",
+          "inputs": [
+            { "name": "File Name", "nickname": "FN", "type": "string", "access": "list" },
+            { "name": "File Path", "nickname": "FP", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Bitmap", "nickname": "BMP", "type": "generic", "access": "list", "default": "", "optional": true },
+            { "name": "Source URL", "nickname": "URL", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Base64", "nickname": "B64", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Capture Rhino Viewport", "nickname": "CRV", "type": "bool", "access": "list", "default": "false", "optional": true },
+            { "name": "View Name", "nickname": "V", "type": "string", "access": "list", "default": "", "optional": true },
+            { "name": "Ref", "nickname": "Ref", "type": "string", "access": "list", "default": "", "optional": true }
+          ],
+          "outputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "item" },
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "list" }
+          ]
+        },
+        {
+          "class_name": "PageBlocksAggregatorComponent",
+          "file_name": "PageBlocksAggregator.cs",
+          "type": "component",
+          "role": "aggregator",
+          "name": "Blocks Aggregator",
+          "nickname": "Blocks",
+          "inputs": [
+            { "name": "Block JSON", "nickname": "BJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Blocks JSON", "nickname": "BLJ", "type": "string", "access": "list" }
+          ]
+        },
+        {
+          "class_name": "ContentChangesAggregatorComponent",
+          "file_name": "ContentChangesAggregator.cs",
+          "type": "component",
+          "role": "aggregator",
+          "name": "Content Changes Aggregator",
+          "nickname": "Changes",
+          "description": "Flattens every wired Change JSON (from Insert/Update Page, Build Pages From Tree, Build Insert File) into one ordered batch, capped at the API's 50-per-call limit.",
+          "inputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ],
+          "outputs": [
+            { "name": "Change JSON", "nickname": "CJ", "type": "string", "access": "list" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Presets",
+      "type": "preset",
+      "components": [
+        {
+          "class_name": "HintStylePresetComponent",
+          "file_name": "HintStylePreset.cs",
+          "type": "preset",
+          "role": "preset",
+          "name": "Hint Style",
+          "nickname": "HintStyle",
+          "values": ["info", "warning", "danger", "success"]
+        },
+        {
+          "class_name": "TextColorPresetComponent",
+          "file_name": "TextColorPreset.cs",
+          "type": "preset",
+          "role": "preset",
+          "name": "Text Color",
+          "nickname": "TextColor",
+          "description": "Feeds Color Mark's Text Color and/or Background Color inputs -- background is GitBook's 'highlight' equivalent. Named colors plus semantic $-tokens resolved from a published site's theme.",
+          "values": ["default", "green", "blue", "red", "orange", "yellow", "purple", "pink", "violet", "cyan", "$primary", "$info", "$success", "$warning", "$danger", "$tint"]
+        }
+      ]
+    },
+    {
+      "name": "Utilities",
+      "type": "util",
+      "components": [
+        { "class_name": "GitBookConnectClient", "file_name": "GitBookConnectClient.cs", "type": "utility" },
+        { "class_name": "PluginUtilities", "file_name": "PluginUtilities.cs", "type": "utility" },
+        { "class_name": "ButtonComponent", "file_name": "ButtonComponent.cs", "type": "utility" }
+      ]
+    }
+  ],
+  "builders": [
+    { "file_name": "PageBuilders.cs", "covers": ["Page"], "used_by": ["BuildPageMarkdownComponent", "InsertPageComponent", "UpdatePageComponent", "BuildPagesFromTreeComponent", "BuildRichPageComponent"] },
+    { "file_name": "FileBuilders.cs", "covers": ["File"], "used_by": ["BuildInsertFileComponent"] },
+    { "file_name": "TableBuilders.cs", "covers": ["Table"], "used_by": ["MarkdownTableFromGridComponent", "TableBlockComponent"] },
+    { "file_name": "TextMarkBuilders.cs", "covers": ["Text", "Mark"], "used_by": ["PlainTextComponent", "BoldMarkComponent", "ItalicMarkComponent", "StrikethroughMarkComponent", "CodeMarkComponent", "KeyboardMarkComponent", "SuperscriptMarkComponent", "SubscriptMarkComponent", "ColorMarkComponent"] },
+    { "file_name": "BlockBuilders.cs", "covers": ["Block"], "used_by": ["ParagraphBlockComponent", "HeadingBlockComponent", "BuildHintBlockComponent", "BuildExpandableBlockComponent", "BuildCardsBlockComponent", "PageBlocksAggregatorComponent", "BuildRichPageComponent"] }
+  ],
+  "relations": [
+    { "from": "MarkdownTableFromGridComponent.Markdown Body", "to": "BuildPageMarkdownComponent.Markdown Body", "nickname": "MB", "access": "item->item" },
+    { "from": "BuildPageMarkdownComponent.Document JSON", "to": "InsertPageComponent.Document JSON", "nickname": "DJ", "access": "item->list" },
+    { "from": "BuildPageMarkdownComponent.Document JSON", "to": "UpdatePageComponent.Document JSON", "nickname": "DJ", "access": "item->list" },
+    { "from": "BuildRichPageComponent.Document JSON", "to": "InsertPageComponent.Document JSON", "nickname": "DJ", "access": "item->list" },
+    { "from": "BuildRichPageComponent.Document JSON", "to": "UpdatePageComponent.Document JSON", "nickname": "DJ", "access": "item->list" },
+    { "from": "PlainTextComponent.Text JSON", "to": "BoldMarkComponent.Text JSON", "nickname": "TJ", "access": "item->item" },
+    { "from": "BoldMarkComponent.Text JSON", "to": "ItalicMarkComponent.Text JSON", "nickname": "TJ", "access": "item->item" },
+    { "from": "ColorMarkComponent.Text JSON", "to": "ParagraphBlockComponent.Text JSON", "nickname": "TJ", "access": "item->list" },
+    { "from": "ParagraphBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "HeadingBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "BuildHintBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "BuildExpandableBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "BuildCardsBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "TableBlockComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "item->list" },
+    { "from": "BuildInsertFileComponent.Block JSON", "to": "PageBlocksAggregatorComponent.Block JSON", "nickname": "BJ", "access": "list->list" },
+    { "from": "PageBlocksAggregatorComponent.Blocks JSON", "to": "BuildRichPageComponent.Blocks JSON", "nickname": "BLJ", "access": "list->list" },
+    { "from": "InsertPageComponent.Change JSON", "to": "ContentChangesAggregatorComponent.Change JSON", "nickname": "CJ", "access": "list->list" },
+    { "from": "UpdatePageComponent.Change JSON", "to": "ContentChangesAggregatorComponent.Change JSON", "nickname": "CJ", "access": "list->list" },
+    { "from": "BuildPagesFromTreeComponent.Change JSON", "to": "ContentChangesAggregatorComponent.Change JSON", "nickname": "CJ", "access": "list->list" },
+    { "from": "BuildInsertFileComponent.Change JSON", "to": "ContentChangesAggregatorComponent.Change JSON", "nickname": "CJ", "access": "item->list" },
+    { "from": "ContentChangesAggregatorComponent.Change JSON", "to": "ApplyContentChangesComponent.Change JSON", "nickname": "CJ", "access": "list->list" },
+    { "from": "CreateChangeRequestComponent.Change Request ID", "to": "ApplyContentChangesComponent.Change Request ID", "nickname": "CRID", "access": "item->item" },
+    { "from": "CreateChangeRequestComponent.Change Request ID", "to": "MergeChangeRequestComponent.Change Request ID", "nickname": "CRID", "access": "item->item" }
+  ],
+  "payload_contracts": [
+    {
+      "resource": "Page",
+      "contract": { "name": "Document JSON", "nickname": "DJ", "access": "item" },
+      "produced_by": ["BuildRichPageComponent", "BuildPageMarkdownComponent"],
+      "consumed_by": ["InsertPageComponent", "UpdatePageComponent"]
+    },
+    {
+      "resource": "TextRun",
+      "contract": { "name": "Text JSON", "nickname": "TJ", "access": "item" },
+      "produced_by": ["PlainTextComponent", "BoldMarkComponent", "ItalicMarkComponent", "StrikethroughMarkComponent", "CodeMarkComponent", "KeyboardMarkComponent", "SuperscriptMarkComponent", "SubscriptMarkComponent", "ColorMarkComponent"],
+      "consumed_by": ["BoldMarkComponent", "ItalicMarkComponent", "StrikethroughMarkComponent", "CodeMarkComponent", "KeyboardMarkComponent", "SuperscriptMarkComponent", "SubscriptMarkComponent", "ColorMarkComponent", "ParagraphBlockComponent", "HeadingBlockComponent", "BuildHintBlockComponent", "BuildExpandableBlockComponent"]
+    },
+    {
+      "resource": "Block",
+      "contract": { "name": "Block JSON", "nickname": "BJ", "access": "item" },
+      "produced_by": ["ParagraphBlockComponent", "HeadingBlockComponent", "BuildHintBlockComponent", "BuildExpandableBlockComponent", "BuildCardsBlockComponent", "TableBlockComponent", "BuildInsertFileComponent"],
+      "consumed_by": ["PageBlocksAggregatorComponent"]
+    },
+    {
+      "resource": "ContentChange",
+      "contract": { "name": "Change JSON", "nickname": "CJ", "access": "list" },
+      "produced_by": ["ContentChangesAggregatorComponent"],
+      "consumed_by": ["ApplyContentChangesComponent"]
+    }
+  ],
+  "skipped_for_v1": [
+    { "item": "Underline text mark", "reason": "Requested, but GitBook's DocumentTextMark schema has no underline mark -- confirmed the 8 that exist: bold, italic, strikethrough, code, keyboard, superscript, subscript, color. Strikethrough Mark is the closest available equivalent." },
+    { "item": "Document Component (auto-document a Grasshopper component: screenshot + Inputs/Outputs table)", "reason": "User asked to remove it. Its screenshot-upload logic was folded into Build Insert File's more general source-agnostic design rather than dropped outright." },
+    { "item": "Create/Update/Duplicate Space, Create/Update Collection", "reason": "No confirmed workflow creates, renames, or duplicates spaces/collections -- all workflows operate on pages inside an already-existing space. Flagged by pr-spec-critic review; kept the read side (List/Get Space, List/Get Collection, now merged into Workspace) for navigating to a target Space ID." },
+    { "item": "Delete Space / Delete Collection / Delete Page (revert_page)", "reason": "Destructive DELETE-class endpoints -- proposed skip by default per convention, require explicit opt-in." },
+    { "item": "Comments, formal Reviews (submit_review), requested-reviewer removal", "reason": "Not used by any confirmed workflow -- reviewing/commenting is a human-in-GitBook-UI action, not a Grasshopper authoring action." },
+    { "item": "Docs Sites (list/create/update/publish/unpublish a published site)", "reason": "Not used by any confirmed workflow. Content workflows target Spaces; publishing a Site on top of Spaces is a separate concern nobody asked for yet." },
+    { "item": "List Files / Get File / Get Reusable Content (Content tab reads)", "reason": "Not needed by any confirmed workflow -- file lookups happen through Build Insert File's own ref system, not by browsing existing files." },
+    { "item": "SSO/SAML, audit events, teams, translations, Ask AI, integration publishing, MCP servers, redirects, fonts, styleguides, adaptive-content, git-sync imports", "reason": "~326 of 365 total API operations -- enterprise/admin/AI surface with no stated parametric-design workflow (carried over from feasibility.json discovery notes)." }
+  ]
+}

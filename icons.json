@@ -1,0 +1,386 @@
+{
+  "plugin_name": "GitBookConnect",
+  "plugin_prefix": "GC",
+  "resources_path": "Icons",
+  "resx_path": "Properties/Resources.resx",
+  "defaults": {
+    "size": 24,
+    "fg_color": "#FFFFFF",
+    "background": {
+      "shape": {
+        "type": "bubble",
+        "gradient": {
+          "from": "#4C1D95",
+          "to": "#C4B5FD",
+          "angle": 90
+        }
+      }
+    }
+  },
+  "plugin_icon": {
+    "size": 16,
+    "fg_iconify_id": "ph:book-open-text",
+    "fg_color": "#FFFFFF",
+    "background": {
+      "shape": {
+        "type": "bubble",
+        "gradient": {
+          "from": "#4C1D95",
+          "to": "#C4B5FD",
+          "angle": 90
+        }
+      }
+    }
+  },
+  "subcategories": {
+    "Auth": {
+      "background": {
+        "shape": {
+          "type": "hexagon",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Workspace": {
+      "background": {
+        "shape": {
+          "type": "square",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Content": {
+      "background": {
+        "shape": {
+          "type": "bookmark",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Change Requests": {
+      "background": {
+        "shape": {
+          "type": "diamond",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Pages": {
+      "background": {
+        "shape": {
+          "type": "document",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Text": {
+      "background": {
+        "shape": {
+          "type": "circle",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Rich Content": {
+      "background": {
+        "shape": {
+          "type": "bubble",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Compose": {
+      "background": {
+        "shape": {
+          "type": "copy",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    },
+    "Presets": {
+      "background": {
+        "shape": {
+          "type": "3-arches",
+          "gradient": {
+            "from": "#4C1D95",
+            "to": "#C4B5FD",
+            "angle": 90
+          }
+        }
+      },
+      "fg_color": "#FFFFFF"
+    }
+  },
+  "components": [
+    {
+      "name": "GitBookAuth",
+      "subcategory": "Auth",
+      "fg_iconify_id": "ph:key"
+    },
+    {
+      "name": "GetAllOrganizations",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:buildings"
+    },
+    {
+      "name": "GetOrganization",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:building"
+    },
+    {
+      "name": "GetAllSpaces",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:squares-four"
+    },
+    {
+      "name": "GetSpace",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:square"
+    },
+    {
+      "name": "GetAllCollections",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:folders"
+    },
+    {
+      "name": "GetCollection",
+      "subcategory": "Workspace",
+      "fg_iconify_id": "ph:folder"
+    },
+    {
+      "name": "GetPublishedContent",
+      "subcategory": "Content",
+      "fg_iconify_id": "ph:book-open"
+    },
+    {
+      "name": "GetAllPages",
+      "subcategory": "Content",
+      "fg_iconify_id": "ph:files"
+    },
+    {
+      "name": "GetPage",
+      "subcategory": "Content",
+      "fg_iconify_id": "ph:file-text"
+    },
+    {
+      "name": "GetPageByPath",
+      "subcategory": "Content",
+      "fg_iconify_id": "ph:file-magnifying-glass"
+    },
+    {
+      "name": "CreateChangeRequest",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:git-branch"
+    },
+    {
+      "name": "GetAllChangeRequests",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:list-bullets"
+    },
+    {
+      "name": "GetChangeRequest",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:git-branch"
+    },
+    {
+      "name": "UpdateChangeRequest",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:pencil-simple"
+    },
+    {
+      "name": "GetChangeRequestContent",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:file-code"
+    },
+    {
+      "name": "ApplyContentChanges",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:check-square"
+    },
+    {
+      "name": "SyncChangeRequest",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:arrows-clockwise"
+    },
+    {
+      "name": "RequestReviewers",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:users"
+    },
+    {
+      "name": "MergeChangeRequest",
+      "subcategory": "Change Requests",
+      "fg_iconify_id": "ph:git-merge"
+    },
+    {
+      "name": "BuildPageMarkdown",
+      "subcategory": "Pages",
+      "fg_iconify_id": "mdi:language-markdown"
+    },
+    {
+      "name": "MarkdownTableFromGrid",
+      "subcategory": "Pages",
+      "fg_iconify_id": "ph:table"
+    },
+    {
+      "name": "InsertPage",
+      "subcategory": "Pages",
+      "fg_iconify_id": "ph:file-plus"
+    },
+    {
+      "name": "UpdatePage",
+      "subcategory": "Pages",
+      "fg_iconify_id": "ph:file-arrow-up"
+    },
+    {
+      "name": "BuildPagesFromTree",
+      "subcategory": "Pages",
+      "fg_iconify_id": "ph:tree-structure"
+    },
+    {
+      "name": "PlainText",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-aa"
+    },
+    {
+      "name": "BoldMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-b"
+    },
+    {
+      "name": "ItalicMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-italic"
+    },
+    {
+      "name": "StrikethroughMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-strikethrough"
+    },
+    {
+      "name": "CodeMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:code"
+    },
+    {
+      "name": "KeyboardMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:keyboard"
+    },
+    {
+      "name": "SuperscriptMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-superscript"
+    },
+    {
+      "name": "SubscriptMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:text-subscript"
+    },
+    {
+      "name": "ColorMark",
+      "subcategory": "Text",
+      "fg_iconify_id": "ph:palette"
+    },
+    {
+      "name": "ParagraphBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:paragraph"
+    },
+    {
+      "name": "HeadingBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:text-h-one"
+    },
+    {
+      "name": "BuildHintBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:info"
+    },
+    {
+      "name": "BuildExpandableBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:caret-circle-down"
+    },
+    {
+      "name": "BuildCardsBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:cards"
+    },
+    {
+      "name": "TableBlock",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:table"
+    },
+    {
+      "name": "BuildRichPage",
+      "subcategory": "Rich Content",
+      "fg_iconify_id": "ph:file-code"
+    },
+    {
+      "name": "BuildInsertFile",
+      "subcategory": "Compose",
+      "fg_iconify_id": "ph:image-square"
+    },
+    {
+      "name": "PageBlocksAggregator",
+      "subcategory": "Compose",
+      "fg_iconify_id": "ph:stack"
+    },
+    {
+      "name": "ContentChangesAggregator",
+      "subcategory": "Compose",
+      "fg_iconify_id": "ph:stack-plus"
+    },
+    {
+      "name": "HintStylePreset",
+      "subcategory": "Presets",
+      "fg_iconify_id": "ph:info"
+    },
+    {
+      "name": "TextColorPreset",
+      "subcategory": "Presets",
+      "fg_iconify_id": "ph:palette"
+    }
+  ]
+}

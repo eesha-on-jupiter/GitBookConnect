@@ -1,0 +1,149 @@
+{
+  "platform": "GitBook",
+  "base_url": "https://api.gitbook.com/v1",
+  "auth_method": "Bearer token",
+  "api_version": "v1 (OpenAPI 0.0.1-beta)",
+  "extra_headers": {},
+  "openapi_spec_url": "https://api.gitbook.com/openapi.json",
+  "openapi_spec_available": true,
+  "api_stats": {
+    "total_paths": 255,
+    "total_operations": 365,
+    "note": "Full API surface is far larger than what's listed below (SSO/SAML, audit events, teams, translations, AI/Ask assistant, integration publishing, MCP server config, redirects, fonts, styleguides, adaptive-content, agent channels/findings/insights, git-sync imports). Those are enterprise/admin/AI surface with no clear Grasshopper parametric workflow and are excluded here; pr-spec Phase 3 will confirm final scope against stated workflows."
+  },
+  "content_workflow_note": "GitBook does NOT allow direct writes to a space's live content. GET /spaces/{spaceId}/content is read-only. All content mutation goes through a Change Request: POST .../change-requests creates one (like a git branch), POST .../change-requests/{id}/content applies a batch of content changes to it (like commits), optionally POST .../requested-reviewers and POST .../reviews for review, then POST .../change-requests/{id}/merge publishes it into the space's live content (like merging a PR). This is structurally identical to a GitHub PR flow and should drive the write-component model in Phase 3: Create Change Request -> Apply Content Changes -> (optional review) -> Merge Change Request.",
+  "resources": [
+    {
+      "name": "User",
+      "endpoints": [
+        { "id": "get_current_user", "method": "GET", "path": "/user" }
+      ]
+    },
+    {
+      "name": "Organization",
+      "endpoints": [
+        { "id": "list_organizations", "method": "GET", "path": "/orgs" },
+        { "id": "get_organization", "method": "GET", "path": "/orgs/{organizationId}" },
+        { "id": "update_organization", "method": "PATCH", "path": "/orgs/{organizationId}" }
+      ]
+    },
+    {
+      "name": "Space",
+      "endpoints": [
+        { "id": "list_spaces", "method": "GET", "path": "/orgs/{organizationId}/spaces" },
+        { "id": "create_space", "method": "POST", "path": "/orgs/{organizationId}/spaces" },
+        { "id": "get_space", "method": "GET", "path": "/spaces/{spaceId}" },
+        { "id": "update_space", "method": "PATCH", "path": "/spaces/{spaceId}" },
+        { "id": "delete_space", "method": "DELETE", "path": "/spaces/{spaceId}" },
+        { "id": "duplicate_space", "method": "POST", "path": "/spaces/{spaceId}/duplicate" },
+        { "id": "move_space", "method": "POST", "path": "/spaces/{spaceId}/move" }
+      ]
+    },
+    {
+      "name": "Collection",
+      "endpoints": [
+        { "id": "list_collections", "method": "GET", "path": "/orgs/{organizationId}/collections" },
+        { "id": "create_collection", "method": "POST", "path": "/orgs/{organizationId}/collections" },
+        { "id": "get_collection", "method": "GET", "path": "/collections/{collectionId}" },
+        { "id": "update_collection", "method": "PATCH", "path": "/collections/{collectionId}" },
+        { "id": "delete_collection", "method": "DELETE", "path": "/collections/{collectionId}" },
+        { "id": "list_collection_spaces", "method": "GET", "path": "/collections/{collectionId}/spaces" },
+        { "id": "move_collection", "method": "POST", "path": "/collections/{collectionId}/move" }
+      ]
+    },
+    {
+      "name": "Content",
+      "description": "Read-only view of a space's currently PUBLISHED (merged) content — pages, files, reusable content blocks. Writes never touch this directly; see content_workflow_note.",
+      "endpoints": [
+        { "id": "get_published_content", "method": "GET", "path": "/spaces/{spaceId}/content" },
+        { "id": "list_pages", "method": "GET", "path": "/spaces/{spaceId}/content/pages" },
+        { "id": "get_page", "method": "GET", "path": "/spaces/{spaceId}/content/page/{pageId}" },
+        { "id": "get_page_by_path", "method": "GET", "path": "/spaces/{spaceId}/content/path/{pagePath}" },
+        { "id": "list_files", "method": "GET", "path": "/spaces/{spaceId}/content/files" },
+        { "id": "get_file", "method": "GET", "path": "/spaces/{spaceId}/content/files/{fileId}" },
+        { "id": "get_reusable_content", "method": "GET", "path": "/spaces/{spaceId}/content/reusable-contents/{reusableContentId}" },
+        { "id": "apply_content_template", "method": "POST", "path": "/spaces/{spaceId}/content/template" }
+      ]
+    },
+    {
+      "name": "ChangeRequest",
+      "description": "The write path for all content. content body change endpoint takes a batch requests[]-style array discriminated by `operation`: update_page | insert_page | delete_page | revert_page | insert_files. Pages can be authored as Markdown (frontmatter for metadata) or a structured JSON document.",
+      "endpoints": [
+        { "id": "list_change_requests", "method": "GET", "path": "/spaces/{spaceId}/change-requests" },
+        { "id": "create_change_request", "method": "POST", "path": "/spaces/{spaceId}/change-requests" },
+        { "id": "get_change_request", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}" },
+        { "id": "update_change_request", "method": "PATCH", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}" },
+        { "id": "get_change_request_content", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/content" },
+        { "id": "apply_change_request_content", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/content" },
+        { "id": "list_change_request_pages", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/content/pages" },
+        { "id": "list_changes", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/changes" },
+        { "id": "sync_change_request", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/update" },
+        { "id": "list_requested_reviewers", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/requested-reviewers" },
+        { "id": "request_reviewers", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/requested-reviewers" },
+        { "id": "remove_requested_reviewer", "method": "DELETE", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/requested-reviewers/{userId}" },
+        { "id": "list_reviews", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/reviews" },
+        { "id": "submit_review", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/reviews" },
+        { "id": "merge_change_request", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/merge" }
+      ],
+      "content_change_operations": [
+        { "operation": "insert_page", "schema": "ChangeRequestContentChangeInsertPage" },
+        { "operation": "update_page", "schema": "ChangeRequestContentChangeUpdatePage" },
+        { "operation": "delete_page", "schema": "ChangeRequestContentChangeDeletePage" },
+        { "operation": "revert_page", "schema": "ChangeRequestContentChangeRevertPage" },
+        { "operation": "insert_files", "schema": "ChangeRequestContentChangeInsertFiles" }
+      ]
+    },
+    {
+      "name": "ChangeRequestComment",
+      "endpoints": [
+        { "id": "list_comments", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments" },
+        { "id": "create_comment", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments" },
+        { "id": "get_comment", "method": "GET", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments/{commentId}" },
+        { "id": "update_comment", "method": "PUT", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments/{commentId}" },
+        { "id": "delete_comment", "method": "DELETE", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments/{commentId}" },
+        { "id": "reply_to_comment", "method": "POST", "path": "/spaces/{spaceId}/change-requests/{changeRequestId}/comments/{commentId}/replies" }
+      ]
+    },
+    {
+      "name": "Revision",
+      "description": "Read-only historical snapshots of a space's published content.",
+      "endpoints": [
+        { "id": "get_revision", "method": "GET", "path": "/spaces/{spaceId}/revisions/{revisionId}" },
+        { "id": "list_revision_pages", "method": "GET", "path": "/spaces/{spaceId}/revisions/{revisionId}/pages" },
+        { "id": "get_revision_changes", "method": "GET", "path": "/spaces/{spaceId}/revisions/{revisionId}/changes" }
+      ]
+    },
+    {
+      "name": "DocsSite",
+      "description": "Published documentation sites (the public-facing output built from one or more spaces).",
+      "endpoints": [
+        { "id": "list_sites", "method": "GET", "path": "/orgs/{organizationId}/sites" },
+        { "id": "create_site", "method": "POST", "path": "/orgs/{organizationId}/sites" },
+        { "id": "get_site", "method": "GET", "path": "/orgs/{organizationId}/sites/{siteId}" },
+        { "id": "update_site", "method": "PATCH", "path": "/orgs/{organizationId}/sites/{siteId}" },
+        { "id": "delete_site", "method": "DELETE", "path": "/orgs/{organizationId}/sites/{siteId}" },
+        { "id": "publish_site", "method": "POST", "path": "/orgs/{organizationId}/sites/{siteId}/publish" },
+        { "id": "unpublish_site", "method": "POST", "path": "/orgs/{organizationId}/sites/{siteId}/unpublish" },
+        { "id": "get_published_site", "method": "GET", "path": "/orgs/{organizationId}/sites/{siteId}/published" }
+      ]
+    }
+  ],
+  "resource_hierarchy": [
+    "Organization",
+    "  -> Collection (-> child Collections, -> Spaces)",
+    "  -> Space",
+    "       -> Content (published, read-only)",
+    "       -> ChangeRequest (the write branch)",
+    "            -> ChangeRequestComment (+ replies)",
+    "            -> Review",
+    "       -> Revision (published history, read-only)",
+    "  -> DocsSite (publishes one or more Spaces publicly)"
+  ],
+  "auth_details": {
+    "schemes": ["user (Bearer, personal access token)", "integration / integration-installation (Bearer, GitBook integration token)"],
+    "oauth_available": true,
+    "oauth_scopes_relevant": ["space:read", "space:write", "change-request:merge", "organization:read", "site:read", "site:write", "site:publish"],
+    "change_request_write_restriction": "Verified per-endpoint in openapi.json: create_change_request, apply_change_request_content, and request_reviewers only accept a 'user' token (personal access token, or OAuth-as-user with space:write scope) -- the integration/integration-installation security schemes are NOT listed for these operations, unlike every read endpoint. merge_change_request additionally requires change-request:merge specifically (separate from space:write) when using OAuth. Practical implication: GitBookConnect's Token input must be a GitBook Personal Access Token for any Change Request write to succeed -- an integration token will be rejected outright regardless of scope, and a personal token still inherits the underlying user's actual space role (Admin/Editor/Reviewer/Viewer), so a Reviewer/Viewer-role user will still be blocked.",
+    "live_verification": "User ran a live 5-step smoke test (GET /user, GET /spaces/{id}, POST .../change-requests, POST .../change-requests/{id}/content, GET .../change-requests/{id}) against the real API with a Personal Access Token on 2026-08-27. All 5 steps succeeded -- confirms the change_request_write_restriction fix (personal token, not integration token) actually resolves the auth error, not just the schema analysis. Bonus finding: the ChangeRequest response object includes a urls.app field -- a direct link to view/edit the Change Request in the GitBook web app (e.g. https://app.gitbook.com/o/<org>/s/<space>/~/changes/<crId>/). Added as a URL output on Create Change Request and Get Change Request in plugin-spec.json."
+  }
+}

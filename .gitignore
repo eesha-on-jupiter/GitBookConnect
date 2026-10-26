@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+*.DS_Store
+dist/
+.env
+*.local
+dogfood/
+demos/
+.claude/
+settings.local.json
+# icon review contact sheet (not part of the build)
+Icons/_new-icons.png

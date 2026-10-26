@@ -1,0 +1,13 @@
+name: gitbookconnect
+version: 1.0.0
+authors:
+  - Eesha Jain
+description: "Grasshopper components for the GitBook API — browse organizations, spaces and published content, and author GitBook pages through the Change Request flow from Rhino/Grasshopper. Made with the PleaseREST Claude Code plugin."
+url: https://github.com/eesha-on-jupiter/GitBookConnect
+keywords:
+  - grasshopper
+  - rhino
+  - gitbook
+  - rest
+  - api
+icon: GitBookConnectLogo.png

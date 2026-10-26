@@ -1,0 +1,53 @@
+{
+  "workflows": [
+    {
+      "name": "Batch-publish pages from a data tree",
+      "user_goal": "Generate one GitBook page per tree branch (per building level, zone, room, component type...) in a single Change Request instead of creating pages one at a time in the GitBook UI",
+      "data_shape": "tree of records (one branch per page) -> parallel tree of insert_page change operations",
+      "varies_per_item": true,
+      "benchmark": null
+    },
+    {
+      "name": "Tabular data to Markdown table page",
+      "user_goal": "Turn a rows x columns tree/list (a schedule, a material takeoff, a load-case summary) into a Markdown table inserted or updated into a page",
+      "data_shape": "tree/list of rows x columns -> single Markdown table string",
+      "varies_per_item": false,
+      "benchmark": "tabular-to-platform"
+    },
+    {
+      "name": "Parametric per-item page content",
+      "user_goal": "Vary page content (title, description, embedded computed values) across every item in a tree using computed values, e.g. one spec page per structural element type populated from analysis results",
+      "data_shape": "tree of computed values -> parallel tree of page document strings",
+      "varies_per_item": true,
+      "benchmark": null
+    },
+    {
+      "name": "Change-request lifecycle round-trip",
+      "user_goal": "Model GitBook's actual (mandatory) write path explicitly: create a Change Request, apply a batch of content changes, optionally request reviewers, then merge -- since there is no direct write to live content",
+      "data_shape": "n/a - structural write path every other write workflow ends in",
+      "varies_per_item": false,
+      "benchmark": null
+    },
+    {
+      "name": "Sync existing docs when the model changes",
+      "user_goal": "Re-run a parametric update: find pages by path, regenerate their Markdown from current Grasshopper data, and push update_page operations for only the changed pages in one Change Request",
+      "data_shape": "tree of (page path, new content) pairs -> parallel tree of update_page change operations",
+      "varies_per_item": true,
+      "benchmark": null
+    },
+    {
+      "name": "Insert an image into a GitBook page from any source",
+      "user_goal": "Build an image file to embed in a page from whichever source is on hand -- a local file path, a Bitmap object already in the GH session, a URL, or a live capture of the active Rhino 3D viewport -- without needing a different component per source",
+      "data_shape": "one of {file path, bitmap, URL, Rhino viewport capture} -> (insert_files operation) + (Image Block JSON)",
+      "varies_per_item": false,
+      "benchmark": null
+    },
+    {
+      "name": "Rich, styled JSON page content",
+      "user_goal": "Author pages primarily through GitBook's structured JSON document model rather than Markdown -- styled inline text (bold, italic, strikethrough, code, keyboard, superscript, subscript, text/background color), plus block-level structure (headings, paragraphs, hint callouts, expandables, cards, tables) -- so richer formatting than Markdown alone is available from Grasshopper",
+      "data_shape": "chained Text JSON mark components (recursive, one style per component) -> Block JSON builders -> Blocks JSON aggregate -> Document JSON",
+      "varies_per_item": false,
+      "benchmark": null
+    }
+  ]
+}
