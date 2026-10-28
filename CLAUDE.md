@@ -16,7 +16,7 @@ Generated Grasshopper REST plugin for the GitBook API, built with the **PleaseRE
 
 - **Version:** 1.0.0 — ready to ship; not yet pushed or tagged
 - **Phase:** 15 — Package + Ship. Code (46 components), unit tests (43), `docs/`, README/LICENSE/.gitignore, `manifest.yml`, CI workflows and the six release artifacts in `dist/` are complete. Local git repo initialised with one commit; no remote yet.
-- **Last completed step:** publish-readiness pass (2026-10-26) — csproj `<Version>1.0.0</Version>` + Release stripping + manifest/logo copy; `GitBookConnectInfo.cs` per `pr-assembly` (logo icon, version read from the assembly); `manifest.yml`; `.github/workflows/build.yml` + `publish.yml`; `GitBookConnect.Tests/BuilderTests.cs` + `BulkAssemblyTests.cs`; docs audited against the component source (Build Page (JSON) doc moved to the Rich Content tab, `docs/quickstart.md` and `docs/examples/` added, changelog 1.0.0 dated); Build Insert File's `Ref` input made optional (matches its description; no GUID or parameter-order change); `dist/` = 3 `.yak` + 3 Libraries-folder `.zip`.
+- **Last completed step:** publish-readiness pass (2026-10-26) — csproj `<Version>1.0.0</Version>` + Release stripping + manifest/logo copy; `GitBookConnectInfo.cs` per `pr-assembly` (logo icon, version read from the assembly); `manifest.yml`; `.github/workflows/publish.yml` (tag `v*.*.*` → package + GitHub Release); `GitBookConnect.Tests/BuilderTests.cs` + `BulkAssemblyTests.cs`; docs audited against the component source (Build Page (JSON) doc moved to the Rich Content tab, `docs/quickstart.md` and `docs/examples/` added, changelog 1.0.0 dated); Build Insert File's `Ref` input made optional (matches its description; no GUID or parameter-order change); `dist/` = 3 `.yak` + 3 Libraries-folder `.zip`.
 - **Next step:** create https://github.com/eesha-on-jupiter/GitBookConnect, add it as `origin` and push `main` (completes Phase 14); Gate 6 live test in Rhino (build the demo canvases from `demos/README.md` / `docs/examples/`; check Build Page (JSON) end to end); Gate 7 install test of the `.yak` files (Mac untested); then tag `v1.0.0`, `yak push` x3, Food4Rhino listing, and backfill the README / `docs/index.md` placeholders.
 - **Last active:** 2026-10-26
 <!-- pr:end state -->
@@ -267,7 +267,7 @@ Phases 1-4 above (Text/Rich Content tabs, Connect to GitBook, Status/Response ou
 
 - [x] dotnet build -c Release x3     [CODE] Rhino 7 (net48), Rhino 8 Win (net7.0-windows), Rhino 8 Mac (net7.0)
 - [x] yak build x3                   [CODE]
-- [x] .github/workflows/publish.yml  [CODE] + build.yml
+- [x] .github/workflows/publish.yml  [CODE]
 - [x] Verify: .yak files in /dist/
 
 [HUMAN GATE 6] Rhino manual test — demos pre-built & pre-checked; open demos/ and confirm live in Grasshopper
