@@ -1,6 +1,6 @@
 # 04 - Insert image
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** put an image on a page from a file, a Bitmap, a URL or a live Rhino viewport capture.
 

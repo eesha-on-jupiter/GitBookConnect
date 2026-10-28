@@ -1,6 +1,6 @@
 # 03 - Rich styled page
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** a page with styled inline text, a heading, a hint, an expandable and cards.
 

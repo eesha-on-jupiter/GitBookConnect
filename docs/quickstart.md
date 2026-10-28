@@ -8,16 +8,16 @@ Follow [authentication.md](authentication.md) to create a GitBook **personal acc
 
 ## 2. Verify the connection
 
-Drop **Auth > Connect to GitBook** ([GitBookAuth](components/Auth/GitBookAuth.md)). Wire the token into `Token` and click **Connect** — `Status` reads `Connected.`
+Drop **Auth > Connect to GitBook** ([GitBookAuth](components/Auth/GitBookAuth.md)). Wire the token into `Token` and click **Connect**; `Status` reads `Connected.`
 
 ## 3. Find your space
 
-- **Workspace > List Organizations** ([docs](components/Workspace/GetAllOrganizations.md)) — click **Get**, read an organization `id` from `Response`.
-- **Workspace > List Spaces** ([docs](components/Workspace/GetAllSpaces.md)) with that `Organization ID` — click **Get**, read the `id` of a space you can edit. That is your `Space ID`.
+- **Workspace > List Organizations** ([docs](components/Workspace/GetAllOrganizations.md)): click **Get**, read an organization `id` from `Response`.
+- **Workspace > List Spaces** ([docs](components/Workspace/GetAllSpaces.md)) with that `Organization ID`, then click **Get**, read the `id` of a space you can edit. That is your `Space ID`.
 
 ## 4. Build a page
 
-- **Pages > Build Page (Markdown)** ([docs](components/Pages/BuildPageMarkdown.md)) — set `Title` and a `Markdown Body` such as `# Hello from Grasshopper`.
+- **Pages > Build Page (Markdown)** ([docs](components/Pages/BuildPageMarkdown.md)): set `Title` and a `Markdown Body` such as `# Hello from Grasshopper`.
 - Its `Document JSON` → **Pages > Insert Page** ([docs](components/Pages/InsertPage.md)) → `Change JSON`.
 - `Change JSON` → **Compose > Content Changes Aggregator** ([docs](components/Compose/ContentChangesAggregator.md)).
 
@@ -29,7 +29,7 @@ Drop **Change Requests > Create Change Request** ([docs](components/Change%20Req
 
 ## 6. Write the page
 
-Drop **Change Requests > Apply Content Changes** ([docs](components/Change%20Requests/ApplyContentChanges.md)). Wire `Token`, `Space ID`, the `Change Request ID` from step 5 and the aggregator's `Change JSON`. Click **Apply** — `Status` reads `OK`.
+Drop **Change Requests > Apply Content Changes** ([docs](components/Change%20Requests/ApplyContentChanges.md)). Wire `Token`, `Space ID`, the `Change Request ID` from step 5 and the aggregator's `Change JSON`. Click **Apply**; `Status` reads `OK`.
 
 Open the `URL` from step 5: the page is in the Change Request draft. Nothing is live yet.
 

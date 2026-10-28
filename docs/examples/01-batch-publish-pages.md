@@ -1,6 +1,6 @@
 # 01 - Batch publish pages
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** one GitBook page per tree branch (one level, zone or element type each), all in one Change Request.
 

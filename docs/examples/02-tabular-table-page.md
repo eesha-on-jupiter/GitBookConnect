@@ -1,6 +1,6 @@
 # 02 - Table page
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** turn a rows x columns grid (a schedule, a takeoff, a load-case summary) into a table on a GitBook page.
 

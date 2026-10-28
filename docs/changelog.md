@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.0.0 — 2026-10-26
+## 1.0.0 (2026-10-26)
 
-Initial release — 46 components on nine tabs.
+Initial release: 46 components on nine tabs.
 
 - **Auth tab:** Connect to GitBook validates a personal access token against `GET /user`.
 - **Workspace tab:** list and get organizations, spaces and collections.
@@ -13,7 +13,7 @@ Initial release — 46 components on nine tabs.
 - **Rich Content tab:** paragraph, heading, hint, expandable, cards and table blocks, and Build Page (JSON) to assemble them into a page.
 - **Compose tab:** Build Insert File (file path, Bitmap, URL, base64 or Rhino viewport capture), Blocks Aggregator and Content Changes Aggregator.
 - **Presets tab:** Hint Style and Text Color value lists.
-- Every HTTP component, and Build Insert File, runs only on a button click — never on canvas recompute.
+- Every HTTP component, and Build Insert File, runs only on a button click, never on canvas recompute.
 - Packages for Rhino 7 Windows, Rhino 8 Windows and Rhino 8 Mac.
 
 ### Known limitations

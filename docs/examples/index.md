@@ -2,7 +2,7 @@
 
 One page per target workflow, each as a component chain you can rebuild on a canvas.
 
-_Demo files pending — these pages are built from the plugin spec, not from saved canvases, so there is no `.gh` to download yet._
+_Demo files pending; these pages are built from the plugin spec, not from saved canvases, so there is no `.gh` to download yet._
 
 ## Before any example
 

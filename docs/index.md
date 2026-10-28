@@ -13,7 +13,7 @@ It browses organizations, spaces and published pages, builds GitBook pages from 
 - **Released:** _(added at first tagged release)_
 - **Made with:** [PleaseREST](https://github.com/eesha-on-jupiter/PleaseREST)
 
-_(Space for a demo video or GIF — drop it above or below this list once one exists.)_
+_(Space for a demo video or GIF; drop it above or below this list once one exists.)_
 
 ## Features
 

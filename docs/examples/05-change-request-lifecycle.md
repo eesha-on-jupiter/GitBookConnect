@@ -1,6 +1,6 @@
 # 05 - Change Request lifecycle
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** open, write, review and merge a Change Request from the canvas.
 

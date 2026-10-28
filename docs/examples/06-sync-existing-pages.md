@@ -1,6 +1,6 @@
 # 06 - Sync existing pages
 
-_Demo file pending — built from the plugin spec, not a saved canvas._
+_Demo file pending; built from the plugin spec, not a saved canvas._
 
 **Goal:** rewrite pages that already exist when the model changes.
 
